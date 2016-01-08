@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+./build-image pure2015
+./build-image hol2015
+./build-image multivariate2015
+
