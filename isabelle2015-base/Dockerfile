@@ -12,7 +12,7 @@ RUN /opt/Isabelle2015/bin/isabelle install /usr/bin
 
 # Create a user "user" and data directory (for mounting the host)
 RUN useradd -m user && adduser user sudo && (echo user:user | chpasswd) && (echo root:root | chpasswd)
-RUN mkdir /home/user/data; chown user /home/user/data
+RUN mkdir /home/user/data && chown user /home/user/data
 WORKDIR /home/user/data
 
 # Installing script for building heaps
