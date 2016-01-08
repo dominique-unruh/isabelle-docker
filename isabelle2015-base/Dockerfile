@@ -11,20 +11,9 @@ RUN rm /tmp/Isabelle.tar.gz
 RUN /opt/Isabelle2015/bin/isabelle install /usr/bin
 
 # Create a user "user" and data directory (for mounting the host)
-RUN useradd -m user
-USER user
-RUN mkdir /home/user/data
+RUN useradd -m user && adduser user sudo && (echo user:user | chpasswd) && (echo root:root | chpasswd)
+RUN mkdir /home/user/data; chown user /home/user/data
 WORKDIR /home/user/data
 
-
-
-# TODO: move below to Pure
-
-# Sets the default logic to Pure
-USER root
-RUN echo '/^ISABELLE_LOGIC=/c\nISABELLE_LOGIC=Pure\n.\nw\nq' | ed -s /opt/Isabelle2015/etc/settings 
-USER user
-# Build Isabelle/Pure heap for user "user"
-RUN isabelle build -b Pure
-
-
+# Installing script for building heaps
+ADD build-heap /root/build-heap

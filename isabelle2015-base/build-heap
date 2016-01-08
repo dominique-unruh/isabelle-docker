@@ -1,0 +1,20 @@
+#!/bin/bash
+# Run as root
+
+set -e
+
+HEAP="$1"
+
+echo "Setting default logic to $HEAP"
+echo -e '/^ISABELLE_LOGIC=/c\nISABELLE_LOGIC=$HEAP\n.\nw\nq' | ed -s /opt/Isabelle2015/etc/settings 
+
+isabelle build -b -s "$HEAP"
+
+# Removing unneeded heaps
+(
+	cd /opt/Isabelle2015/heaps/*
+	rm -rf log
+	for i in *; do
+	    if [ "$i" != "$HEAP" ]; then rm -v "$i"; fi
+	done
+)
