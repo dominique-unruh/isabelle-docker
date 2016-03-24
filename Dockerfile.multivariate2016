@@ -1,0 +1,2 @@
+FROM unruh/isabelle:hol2016
+RUN isabelle build -b HOL-Multivariate_Analysis && ~/set-logic HOL-Multivariate_Analysis

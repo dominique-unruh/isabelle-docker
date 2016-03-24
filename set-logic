@@ -4,4 +4,4 @@
 LOGIC="$1"
 
 echo "Setting default logic to $LOGIC"
-echo -e '/^ISABELLE_LOGIC=/c\nISABELLE_LOGIC='$LOGIC'\n.\nw\nq' | ed -s /opt/Isabelle2015/etc/settings 
+echo -e '/^ISABELLE_LOGIC=/c\nISABELLE_LOGIC='$LOGIC'\n.\nw\nq' | ed -s /opt/Isabelle/etc/settings 

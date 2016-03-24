@@ -2,6 +2,8 @@
 
 set -e
 
+docker info &>/dev/null || sudo start docker
+
 TAG="$1"
 docker build -t unruh/isabelle:"$TAG" -f Dockerfile."$TAG" .
 docker login -u unruh -e dominique@unruh.de

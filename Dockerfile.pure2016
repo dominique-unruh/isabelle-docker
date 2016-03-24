@@ -4,13 +4,18 @@ FROM ubuntu
 RUN apt-get -y update && apt-get install -y lib32stdc++6 openjdk-7-jre wget ed libgomp1 && apt-get clean
 
 # Downloading and installing Isabelle
-RUN wget https://isabelle.in.tum.de/dist/Isabelle2015_linux.tar.gz -O /tmp/Isabelle.tar.gz && cd /opt && tar xf /tmp/Isabelle.tar.gz && rm /tmp/Isabelle.tar.gz
-RUN /opt/Isabelle2015/bin/isabelle install /usr/bin
+RUN wget http://isabelle.in.tum.de/dist/Isabelle2016_app.tar.gz -O /tmp/Isabelle.tar.gz && cd /opt && tar xf /tmp/Isabelle.tar.gz && rm /tmp/Isabelle.tar.gz && ln -s /opt/Isabelle2016 /opt/Isabelle
+RUN /opt/Isabelle/bin/isabelle install /usr/bin
 
 # Create a user "user" and data directory (for mounting the host)
 RUN useradd -m user && adduser user sudo && (echo user:user | chpasswd) && (echo root:root | chpasswd)
 RUN mkdir /home/user/data && chown user /home/user/data
 WORKDIR /home/user/data
+RUN chown user /opt/Isabelle/etc/settings
+USER user
 
 # Installing script for building heaps
-ADD build-heap /root/build-heap
+ADD set-logic /home/user/
+
+# Compiling heap "Pure"
+RUN isabelle build -b Pure && ~/set-logic Pure

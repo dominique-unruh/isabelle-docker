@@ -2,7 +2,11 @@
 
 set -e
 
-./build-image pure2015
-./build-image hol2015
-./build-image multivariate2015
+./build-image pure2016
+./build-image hol2016
+./build-image multivariate2016
+
+#./build-image pure2015
+#./build-image hol2015
+#./build-image multivariate2015
 

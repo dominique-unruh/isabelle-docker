@@ -1,0 +1,3 @@
+FROM unruh/isabelle:pure2016
+RUN isabelle build -b HOL && ~/set-logic HOL
+
